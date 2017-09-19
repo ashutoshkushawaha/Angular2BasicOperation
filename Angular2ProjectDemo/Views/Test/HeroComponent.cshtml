@@ -1,0 +1,48 @@
+﻿<h2>My Heroes</h2>
+<div>
+    <form (ngSubmit)="savePersonDetails()" #personForm="ngForm">
+        <div>
+            <label for="name">Name: </label>
+            <input type="text" name="name" required [(ngModel)]="Hero.name" #name="ngModel">
+            <div [hidden]="name.valid || name.pristine" class="error">
+                Name is required my good sir/lady!
+            </div>
+        </div>
+        <div>
+            <label for="weight">Weight: </label>
+            <input type="number" name="weight" [(ngModel)]="Hero.weight">
+        </div>
+        <div>
+            <label for="height">Height: </label>
+            <input type="number" name="height" [(ngModel)]="Hero.height">
+        </div>
+        <div>
+            <label for="profession">Profession:</label>
+            <select name="profession" [(ngModel)]="Hero.profession">
+                <option *ngFor="let profession of professions" [value]="profession">{{profession}}</option>
+            </select>
+        </div>
+        <button type="submit" [disabled]="!personForm.form.valid">Save</button>
+    </form>
+    @*<label>Hero name:</label> <input #heroName />
+    <button (click)="add(heroName.value); heroName.value=''">
+        Add
+    </button>*@
+</div>
+<ul class="heroes">
+    <li *ngFor="let hero of heroes"
+        [class.selected]="hero === selectedHero"
+        (click)="onclick(hero)">
+        <span class="badge">{{hero.id}}</span> {{hero.name}}
+        @*<button class="delete"
+                    (click)="delete(hero); $event.stopPropagation()">
+                x
+            </button>*@
+    </li>
+</ul>
+<div *ngIf="selectedHero">
+    <h2>
+        {{selectedHero.name | uppercase}} is my hero
+    </h2>
+    <button (click)="gotoDetail()">View Details</button>
+</div>
